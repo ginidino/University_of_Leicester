@@ -9,8 +9,8 @@
 ```
 
 ## Taks1
-- Add a heading (using tags such as <h1> and </h1>) to your document, save it, and then view it by refreshing your browser.
-- Add paragraph tags (<p> and </p>) to your document, save and view.
+- Add a heading (using tags such as `<h1>` and `</h1>`) to your document, save it, and then view it by refreshing your browser.
+- Add paragraph tags (`<p>` and `</p>`) to your document, save and view.
 
 Code
 ```html
