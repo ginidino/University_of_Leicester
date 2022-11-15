@@ -1,0 +1,75 @@
+/** {
+  margin: 8px;
+}*/
+
+.header {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.detail {
+  text-align: left;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bolder;
+  padding: 20px;
+}
+
+#Semester {
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+}
+
+input {
+  font-size:20px;
+  font-family: Arial, sans-serif;
+}
+
+table {
+  border: 1px;
+  border-style: solid;
+  border-collapse: collapse;
+}
+
+th {
+  border: 1px;
+  border-style: solid;
+  border-collapse: collapse;
+  font-weight: bolder;
+  padding: 10px;
+
+}
+
+td {
+  border: 1px;
+  border-style: solid;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+#table1 {
+  border: 1px;
+  border-style: solid;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+#table2 {
+  border: 1px;
+  border-style: solid;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.comment {
+  text-align: left;
+  font-family: Arial, sans-serif;
+  font-weight: bolder;
+  font-size: 20px;
+  padding: 20px;
+}
