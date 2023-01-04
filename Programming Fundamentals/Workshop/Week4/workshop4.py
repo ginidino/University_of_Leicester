@@ -25,8 +25,7 @@ lists = []
 x = [int(x) for x in input("Enter some numbers: ").split()]
 y = [float(y) for y in input("Enter some numbers: ").split()]
 for i in range(5):
-
-print(lists)
+    print(lists)
 
 maxRows=5
 table=maxRows*[0]
