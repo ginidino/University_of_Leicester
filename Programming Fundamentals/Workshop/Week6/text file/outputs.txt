@@ -1,0 +1,6 @@
+At iteration 1, the estimated squared root is 14.470
+At iteration 2, the estimated squared root is 8.790
+At iteration 3, the estimated squared root is 6.955
+At iteration 4, the estimated squared root is 6.713
+At iteration 5, the estimated squared root is 6.708
+At iteration 6, the estimated squared root is 6.708
