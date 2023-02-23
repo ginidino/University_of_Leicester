@@ -1,0 +1,27 @@
+Reading Files
+
+Write a function that takes a filename and returns a list of lists.
+The sublists should contain the content of each line of the file, which are separated by commas.
+
+--- File Contents ---
+'''
+a, b, c
+1, 2, 3, 4
+one, two, three
+a, b, 0, c
+111111, 1111a1111, 00001234
+'''
+
+
+OOP
+
+Create a class called Person with three attributes: name, age, location
+Add setters for these attributes
+Add a constructor that takes the three class attributes as parameters
+Add a function readFromFile(personFile) that takes a filename as a parameter and sets the person's attributes to the contents of the file
+Add a __str__() function that converts the person to a string
+
+--- File Contents ---
+'''
+Scott, 23, Leicester
+'''
