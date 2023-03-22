@@ -9,6 +9,18 @@
 
 <img width="636" alt="Screenshot 2023-03-22 at 9 53 21 pm" src="https://user-images.githubusercontent.com/94044443/227047286-a7b9dc23-3b2d-4fe2-ae12-4361544f04b0.png">
 
+## Stacks: A simple implementation
+One way to implement is as a python list
+```
+[4][8][5][3]
+          ↑
+         top
+```
+Python lists have the following operations:
+* Append - this will be our push operation
+* Pop - this will be our pop operation
+* Len - this will be our size operation
+
 ## Stacks: Common uses
 * Reverse a list of items
 
