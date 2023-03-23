@@ -13,7 +13,7 @@ One way to implelemt is as a python list
 front -> [3][7][5][2][0] <- rear
 ```
 Python lists have the folloving operations:
-* Appens - our append operation
+* Append - our append operation
 * Pop(0) - this will be our seve operation
 * Len - this will be our size operation
 
