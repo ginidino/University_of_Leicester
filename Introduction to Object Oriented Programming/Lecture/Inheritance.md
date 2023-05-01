@@ -1,0 +1,328 @@
+# Inheritance
+* A form of software reuse in which a new calss is created by sbsorbing an existing class's members and embellishing them with new or modified capabilites
+* Can save time during program development by basing new classes on existing high-quality software
+* Increases the likelihood that a system can be implemented and maintained effectively
+* When creating a class, rather than declaring completely new members, you can designate that the new class should inherit the members of an existing class
+  - Existing class is the superclass
+  - New class is the subclass
+* Each subclass can be a superclass of future subcalsses, forming a class hierarchy
+* A `subclass` can add its own fields and methods
+* A `subclass` is more specific than its `superclass` and represents a more specialized group of objects
+* The `subclass` exhibits the behaviors of its `supperclass` and can add behaviors that are specific to the `subclass`
+  - This is why inheritance is sometimes referred to as `specialization`
+* The direct superclass is the superclass from which the subclass explicitly inherits 
+* An indirect superclass is any class above the direct superclass in the class hierarchy
+
+  <img width="358" alt="Screenshot 2023-05-01 at 3 10 24 pm" src="https://user-images.githubusercontent.com/94044443/235464358-8fafcca6-7f2a-4fd2-b4f1-7d08edb41d2a.png">
+
+## Inheritance vs. Composition
+* Inheritance: Is-a relationship between classes
+  - In an *is-a* relationship, an object of a subclass can also be treated as an object of its superclass 
+* Composition: Has-a relationship between classes
+  - In a *has-a* relationship, an object contains references to other objects as members
+
+### More Examples and Observations
+|**Supperclass**|**Subclass**|
+|:---|:---|
+|Student|GraduateStudent, UndergraduateStudent|
+|Shape|Circle, Triangle, Rectangle, Sphere, Cube|
+|Loan|CarLoan, HomeImprovementLoan, MortgageLoan|
+|Employee|Faculty, Staf|
+|BankAccount|CheckingAccount, SavingsAccount|
+* `Superclasses` tend to be "more general" and `subclasses` "more specific"
+* Because every subclass object is an object of its `superclass`, and one `superclass` can have many `subclasses`, the set of objects represented by a `superclass` is typically larger than the set of objects represented by any of its `subclasses`
+
+## Class Hierarchy (Inheritance Hierarchy)
+* A `superclass` exists in a hierarchical relationship with its `subclasses`
+
+  <img width="548" alt="Screenshot 2023-05-01 at 3 17 23 pm" src="https://user-images.githubusercontent.com/94044443/235465645-186b1b7f-f1de-457c-ad8c-282853823cd9.png">
+
+* Each arrow in the hierarchy represents an is-a relationship
+* Follow the arrows upward in the class hierarchy
+  - A *Teacher* is a *Faculty* (also an *Employee*, a *CommunityMember*)
+* *CommunityMember* is the direct superclass of *Employee, Student* and *Alumnus* and is an indirect superclass of all the other classes
+
+## Superclass and Subclass
+* Objects of all classes that extend a common superclass can be treated as objects of that superclass(e.g., java.lang.Object)
+  - Commonality expressed in the members of the superclass
+* Inheritance issue:
+  - `A subclass can inherit methods that it does not need or should not have` 
+  - Even shen a superclass method is appropriate for a subclass, that subclass often needs a customized version of the method
+  - The subclass can **override** (redefine) the superclass method with an appropriate implementation (there will be an example later)
+
+## public and private Members
+* A class's public members are accessible wherever the program has a reference to an object of that class or one of its subclasses
+* A class's private members are accessible only within the class itself (invisible to subclasses)
+
+## protected Members
+* `protected` access is an intermediate access level between pubilc and private
+* A superclass's protected members can be accessed by:
+  - members of that supercalss
+  - members of its subclasses
+  - members of other classes in the same package 
+* All `public` and `protected` superclass members retain their original access modifier when they become members of the subclass
+* `A superclass's private members are hidden in its subclasses`
+  - They can be accessed only through the public or protected methods inherited from the superclass 
+* Subclass methods can refer to public and protected members inherited from the superclass simply by using the member names
+* When a subclass method overrides an inherited superclass method, the superclass method can be accessed from the subclass by preceding the superclass method name with keyword super and a dot (.) separator
+
+### Case Study: A Payroll Application
+* Suppose we need to create classes for two types of employees
+  - Commission employees are paid a percentage of their sales (**ComissionEmployee**)
+  - Base-salaried commission employees receive a base salary plus a percentage of their sales (**BasePlusCommissionEmployee**)
+
+#### Comparing the Two Types
+* Both classes need data fields to store the employee’s personal information (e.g., name, social security number)
+* **Differences**:
+  - **BasePlusCommissionEmployee** class needs one additional field to store the employee’s base salary
+  - The way of calculating the earnings are different
+
+#### Design Choice #1
+Creating the tow classes independently
+<img width="633" alt="Screenshot 2023-05-01 at 3 30 10 pm" src="https://user-images.githubusercontent.com/94044443/235467733-f1e75564-f815-4279-8248-0af73689d5d5.png">
+
+#### Problems of Design Choice #1
+* Much of *BasePlusCommissionEmployee*’s code will be identical to that of *CommissionEmployee*
+* For implementation, we will literally copy the code of the class *CommissionEmployee* and paste the copied code into the class *BasePlusCommissionEmployee*
+  - `"Copy-and-paste" approach is often error prone`. It spreads copies of the same code throughout a system, creating code-maintenance nightmares
+
+#### Design Choice #2
+*BasePlusCommissionEmployee* extends *CommissionEmployee*
+<img width="630" alt="Screenshot 2023-05-01 at 3 32 22 pm" src="https://user-images.githubusercontent.com/94044443/235468053-85d9e7da-575a-4b46-8324-b812b5ffe3a5.png">
+
+#### CommissionEmployee
+```java
+public class CommissionEmployee {
+  private String firstName;
+  private String lastName;
+  private String socialSecurityNumber;
+  private double grossSales;
+  private double commissionRate;
+  ...
+}
+```
+A five-argument constructor
+```java
+public CommissionEmployee(String first, String last, String ssn, double sales, double rate) {
+  firstName = first;
+  lastName = last;
+  socialSecurityNumber = ssn;
+  setGrossSales(sales); // data validation
+  setCommissionRate(rate); // data validation
+}
+
+public void setGrossSales(double sales) {
+  grossSales = (sales < 0.0) ? 0.0 : sales;
+}
+
+public void setCommissionRate(double rate) {
+  commissionRate = (rate > 0.0 && rate < 1.0) ? rate : 0.0;
+}
+```
+Several other get and set methods
+```java
+public void setFirstName(String first) {
+  firstName = first;
+}
+
+public String getFirstName() {
+  return firstName;
+}
+
+public void setLastName(String last) {
+  lastName = last;
+}
+
+public String getLastName() {
+  return lastName;
+}
+....
+```
+Several other get and set methods
+```java
+public void setSocialSecurityNumber(String ssn) {
+  socialSecurityNumber = ssn;
+}
+
+public String getSocialSecurityNumber() {
+  return socialSecurityNumber;
+}
+
+public double getGrossSales() {
+  return grossSales;
+}
+
+public double getCommissionRate() {
+  return commissionRate;
+}
+```
+Calculation and string transformation methods
+```java
+public double earnings() {
+  return commissionRate * grossSales;
+}
+
+@Override
+public String toString() {
+  return String.format("%s: %s %s\n%s: %s\n%s: %.2f\n%s: %.2f", "commission employee", firstName, lastName, "social security number", socialSecurityNumber, "gross sales", grossSales, "commission rate", commissionRate);
+}
+```
+
+#### Overriding toString() Method
+* `toString()` is one of the methods that every class inherits directly or indirectly from class Object
+  - Returns a String that "textually represents" an object
+  - Called implicitly whenever an object must be converted to a String representation (e.g., System.out.println(objRef))
+* Class Object’s `toString()` method returns a String that includes the name of the object’s class.
+  - If not overridden, returns something like "CommissionEmployee@70dea4e" (the part after @ is the hexadecimal representation of the hash code of the object)
+  - This is primarily a placeholder that can be overridden by a subclass to specify customized String representation
+* To override a superclass’s method, a subclass must declare a method with the same signature as the superclass method
+* The access level of an overriding method can be higher, but not lower than that of the overridden method (package-private < protected < public)
+* @Override annotation.
+  - Optional, but helps the compiler to ensure that the method has the same signature as the one in the superclass
+  ```java
+  @Override
+  public String toString() { 
+    ... 
+  }
+  ```
+
+#### CommissionEmployee 
+```java
+public class BasePlusCommissionEmployee extends CommissionEmployee {
+  private double baseSalary; // Added a new field
+
+  public BasePlusCommissionEmployee(String first, String last, String ssn, double sales, double rate, double salary) {
+    // Its own constructor. In Java, constructors are not class members and are not
+    // inherited by subclasses
+    super(first, last, ssn, sales, rate);
+    setBaseSalary(salary);
+  }
+  
+  public void setBaseSalary(double salary) {
+    baseSalary = (salary < 0.0) ? 0.0 : salary;
+  }
+  .....
+}
+```
+Overriding the two inherited methods for customized behaviors
+```java
+public class BasePlusCommissionEmployee extends CommissionEmployee {
+
+  public double earnings() {
+    return baseSalary + (commissionRate * grossSales);
+  }
+  
+  @Override
+  public String toString() {
+    return String.format("%s: %s %s\n%s: %s\n%s: %.2f\n%s: %.2f\n%s: %.2f", "base-salaried", firstName, lastName, "social security number", socialSecurityNumber, "gross sales", grossSales, "commission rate", commissionRate, "base salary", baseSalary);
+  }
+}
+```
+#### Subclass Constructors
+* Each constructor in the subclass needs to invoke a superclass constructor for object construction (e.g., to initialize inherited instance variables) by using the `super` keyword
+* If this is not explicitly done, the compiler automatically inserts a call to the no-argument constructor of the superclass. `If the super class does not have a no-argument constructor, you will get a compile-time error`
+* **Constructor chaining**: If a subclass constructor invokes a constructor of its superclass, there will be a whole chain of constructors called, all the way back to the constructor of Object. You need to be aware of its effect
+
+#### Accessing fields of superclass
+* A subclass inherits all public and protected members of its parent, no matter what package the subclass is in
+  - These members are directly accessible in the subclass
+* If the subclass is in the same package as its parent, it also inherits the parent’s *package-private* members (those without access level modifiers)
+  - These members are directly accessible in the subclass
+* A subclass does not inherit the private members. Private fields need to be accessed using the methods (public, protected, or package-private ones) inherited from superclass
+  
+#### Recall the Access Level Modifiers
+|**Modifier**|**Class**|**Package**|**Subclass**|**World**|
+|---|---|---|---|---|
+|public|Y|Y|Y|Y|
+|protected|Y|Y|Y|N|
+|no_modifier|Y|Y|N|N|
+|private|Y|N|N|N|
+> Note that this is for controlling access to class members. At the top level, a class can only be declared as public or package-private (no explicit modifier)
+
+#### More on the super Keyword
+* Two main usage scenarios
+* The super keyword can be used to invoke a superclass’s constructor (as illustrated by our earlier example)
+* If your method overrides its superclass’s method, you can invoke the overridden method using the keyword super
+
+```java
+public class BasePlusCommissionEmployee extends CommissionEmployee {
+  
+  @Override
+  public String toString() {
+    return String.format("%s: %s %s\n%s: %s\n%s: %.2f\n%s: %.2f\n%s: %.2f", "base-salaried", firstName, lastName, "social security number", socialSecurityNumber, "gross sales", grossSales, "commission rate", commissionRate, "base salary", baseSalary);
+  }
+}
+
+public class BasePlusCommissionEmployee extends CommissionEmployee {
+ 
+  @Override
+  public String toString() {
+    return String.format("%s %s\n%s: %.2f", "base-salaried", super.toString(), "base salary", getBaseSalary());
+  }
+}
+```
+#### Using CommissionEmployee class
+```java
+public class CommissionEmployeeTest {
+	public static void main(String[] args) {
+		CommissionEmployee employee = new CommissionEmployee("Sue", "Jones", "111-1122-223-222", 1000, 6);
+		System.out.println("Employee information are :");
+		System.out.println("First Name: "+employee.getFirstName());
+		System.out.println("Last Name: "+employee.getLastName());
+		System.out.println("Social security number is :"+employee.getSocialSecurityNumber());
+		System.out.println("Gross sales is :"+employee.getGrossSales());
+		System.out.println("Commission rate: "+ employee.getCommissionRate());
+		employee.setGrossSales(500);
+		employee.setCommissionRate(0.1);
+		System.out.println("Updated employee information obtaind by toString:\n\n"+employee);
+	}
+}
+```
+Output
+```
+Employee information are :
+First Name: Sue
+Last Name: Jones
+Social security number is :111-1122-223-222
+Gross sales is :1000.0
+Commission rate: 0.0
+Updated employee information obtaind by toString:
+commission employee: Sue Jones
+social security number: 111-1122-223-222
+gross sales: 500.00
+commission rate: 0.10
+```
+
+#### Using BasePlusCommissionEmployee class
+```java
+public class BasePlusCommissionEmployeeTest {
+	public static void main(String[] args) {
+		BasePlusCommissionEmployee employee = new BasePlusCommissionEmployee("Sue", "Jones", "111-1122-223-222", 1000, 0.4,300);
+		System.out.println("Employee information are :");
+		System.out.println("First Name: "+employee.getFirstName());
+		System.out.println("Last Name: "+employee.getLastName());
+		System.out.println("Social security number is :"+employee.getSocialSecurityNumber());
+		System.out.println("Gross sales is :"+employee.getGrossSales());
+		System.out.println("Commission rate: "+ employee.getCommissionRate());
+		System.out.println("Base salary is: "+employee.getBaseSalary());
+		employee.setBaseSalary(1000);
+		System.out.println("Updated employee information obtaind by toString:\n\n"+employee);
+	}
+}
+```
+Output
+```
+Employee information are :
+First Name: Sue
+Last Name: Jones
+Social security number is :111-1122-223-222
+Gross sales is :1000.0
+Commission rate: 0.4
+Base salary is: 300.0
+Updated employee information obtaind by toString:
+base-salaried commission employee: Sue Jones
+social security number: 111-1122-223-222
+gross sales: 1000.00
+commission rate: 0.40
+base salary: 1000.00
+```
